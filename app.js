@@ -83,4 +83,24 @@ app.post('/upload', function(req, res) {
     });
 });
 
+app.get('/getListOfImages', function(req, res) {
+    ImageUpload.find({isDeleted: false}, function(err, listresult){
+        if (err){
+            res.json({ status: 201, data: err });                            
+        }else{
+            res.json({ status: 200, data: listresult });                                                    
+        }
+    })
+});
+
+app.post('/deleteImage', function(req, res) {
+    ImageUpload.findOneAndUpdate(req.body, { $set: {isDeleted: true }},function (err, result) {
+        if (err){
+            res.json({ status: 201, data: err });                            
+        }else{
+            res.json({ status: 200, data: 'File deleted sucessfully!.' });                                                    
+        }
+    });
+});
+
 module.exports = app;

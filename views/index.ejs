@@ -16,7 +16,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 </head>
-<body ng-app="app" ng-controller="UploadController">
+<body ng-app="app" ng-controller="UploadController"  ng-init="listOfImages()">
     <h2>Upload Images</h2>
     <div class="panel panel-default">
         <div class="panel-body">
@@ -27,6 +27,46 @@
                 </div>
                 <button ng-click="uploadFile()" class = "btn btn-primary">Upload File</button>
             </form>
+        </div>
+    </div>
+    <div class="container">
+      <h2>List of Images</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Image Name</th>
+            <th>Created At</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="x in imageListArray">
+            <td>{{ x.imageName }}</td>
+            <td>{{ x.createdAt | date}}</td>
+            <td ng-click="deleteFile(x._id)" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-trash"></td>
+          </tr>
+        </tbody>
+      </table>
+        <div ng-if="imageListArray.length == 0">No record found!</div>
+    </div>
+
+    <!-- Confirmation Popup -->
+    <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog">
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Delete Image</h4>
+            </div>
+            <div class="modal-body">
+              <p>Do you really want to delete image ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" ng-click="deleteConfirmFile()">Ok</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
         </div>
     </div>
 </body>
